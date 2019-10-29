@@ -1,0 +1,175 @@
+public class InsurancePolicy extends Object {
+  /* 
+   * Creating private field variables that can hold the values
+   * that will be needed later on
+   */
+  private String policyNumber = "";
+  private double copay = 0;
+  private double deductible = 0;
+  private double amountAppliedToDeductible = 0;
+  private double actuarialValue = 0;
+  private boolean hasOutOfPocketLimit = false;
+  private double outOfPocketLimit = 0;
+  private double yearlyBenefit = 0;
+  private double lifetimeBenefit = 0;
+  private InsurancePolicy supplementalInsurance;
+  private Date expirationDate;
+  private double premium = 0;
+  private double profitMargin = 0;
+  private double expectedBenefit = 0;
+  private double claim = 0;
+  
+  /* change the type of expirationDate */
+  public InsurancePolicy(String policyNumber, Date expirationDate, double copay, double deductible, double actuarialValue) {
+    this.policyNumber = policyNumber;
+    this.expirationDate = expirationDate;
+    this.copay = copay;
+    this.deductible = deductible;
+    this.actuarialValue = actuarialValue;
+  }
+  
+  public InsurancePolicy(String policyNumber, Date expirationDate, double copay, double deductible, double actuarialValue, boolean hasOutOfPocketLimit, double outOfPocketLimit, double expectedTenYearBenefit, double profitMargin, InsurancePolicy supplementalInsurance) {
+    this.policyNumber = policyNumber;
+    this.expirationDate = expirationDate;
+    this.copay = copay;
+    this.deductible = deductible;
+    this.actuarialValue = actuarialValue;
+    this.hasOutOfPocketLimit = hasOutOfPocketLimit;
+    this.expectedBenefit = expectedTenYearBenefit;
+    this.profitMargin = profitMargin;
+    this.supplementalInsurance = supplementalInsurance;
+  }
+  
+  /* returns the policy number */
+  public String getPolicyNumber() {
+    return policyNumber;
+  }
+  
+  /* set the "copay" amount as a double value */
+  public void setCopay(double copay) {
+    this.copay = copay;
+  }
+  
+  /* return the "copay" amount */
+  public double getCopay() {
+    return copay;
+  }
+  
+  /* set the "deductible" amount as a double value */
+  public void setDeductible(double deductible) {
+    this.deductible = deductible;
+  }
+  
+  /* return the "deductible" amount */
+  public double getDeductible() {
+    return deductible;
+  }
+  
+  /* return the amount applied to the deductible for the fiscal year */
+  public double getAmountAppliedToDeductible() {
+    return amountAppliedToDeductible;
+  }
+  
+  /* set the actuarial value for the policy which shows
+   * the percentage of claims that the policy may cover */
+  public void setActuarialValue(double actuarialValue) {
+    this.actuarialValue = actuarialValue;
+  }
+  
+  public double getActuarialValue() {
+    return actuarialValue;
+  }
+  
+  
+  /* sets the out-of-pocket limit for the policy only if the policy
+   * allows it with a value of "true", if the policy does
+   * not allow an out-of-pocket limit, "false", then the out-of-pocket
+   * limit is set to 0 */
+  public void setOutOfPocketLimit(boolean hasOutOfPocketLimit, double outOfPocketLimit) {
+    if (hasOutOfPocketLimit == true) {
+      this.outOfPocketLimit = outOfPocketLimit;
+    }
+    else {
+      this.outOfPocketLimit = 0;
+    }
+  }
+  
+  /* returns "true" if the policy has an out-of-pocket limit
+   * and "false" if it does not */
+  public boolean hasOutOfPocketLimit() {
+    if (hasOutOfPocketLimit == true) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+  
+  /* returns the amount for the out-of-pocket limit allowed by the policy */
+  public double getOutOfPocketLimit() {
+    return outOfPocketLimit;
+  }
+  
+  /* returns the amount the policy has paid so far this year */
+  public double getYearlyBenefit() {
+    return yearlyBenefit;
+  }
+  
+  /* return the amount the policy has paid so far in total */
+  public double getLifetimeBenefit() {
+    return lifetimeBenefit;
+  }
+  
+  /* sets a supplemental insurance policy for the policy */
+  public void setSupplementalInsurance(InsurancePolicy policy) {
+    this.supplementalInsurance = policy;
+  }
+  
+  /* returns the supplemental insurance policy, if one exists */
+  public InsurancePolicy getSupplementalInsurance() {
+    return supplementalInsurance;
+  }
+  
+  /* return the ending date of the policy (change return type)*/
+  public Date getExpirationDate() {
+    return expirationDate;
+  }
+  
+  /* return the "premium" value stored in memory */
+  public double getPremium() {
+    return premium;
+  }
+  
+  /* sets the profit margin amount as a double */
+  public void setProfitMargin(double profitMargin) {
+    this.profitMargin = profitMargin;
+  }
+  
+  public double getProfitMargin() {
+    return profitMargin;
+  }
+  
+  public void setExpectedTenYearBenefit(double expectedBenefit) {
+    this.expectedBenefit = expectedBenefit;
+  }
+  
+  public double getExpectedTenYearBenefit() {
+    return expectedBenefit;
+  }
+  
+  public double applyCopay(double claim) {
+    claim = claim - copay;
+    return claim;
+  }
+  
+  public void applyDeductible(double claim) {
+    this.claim = claim;
+    if (this.getAmountAppliedToDeductible() < this.getDeductible()) {
+      if (claim < (this.getDeductible() - this.getAmountAppliedToDeductible())) {
+        this.claim = claim;
+      }
+    }
+  }
+}
+  
+  
